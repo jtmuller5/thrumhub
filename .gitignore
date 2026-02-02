@@ -8,5 +8,6 @@ dist/
 .turbo
 .vercel
 .DS_Store
-heartbeat.md.bak
+HEARTBEAT.md.bak
 PRD.md
+todos.md

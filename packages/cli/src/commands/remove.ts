@@ -10,7 +10,7 @@ import {
 } from "../lib/heartbeat.js";
 
 export const removeCommand = new Command("remove")
-  .description("Remove a snippet from your heartbeat.md")
+  .description("Remove a snippet from your HEARTBEAT.md")
   .argument("<id>", "Snippet ID to remove")
   .action(async (id: string) => {
     const { heartbeatPath } = getConfig();

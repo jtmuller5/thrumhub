@@ -1,11 +1,13 @@
 import Conf from "conf";
+import path from "node:path";
+import os from "node:os";
 import { CliConfig } from "../types/index.js";
 
 const config = new Conf<CliConfig>({
   projectName: "thrum",
   defaults: {
     apiUrl: "http://localhost:3000",
-    heartbeatPath: "./heartbeat.md",
+    heartbeatPath: path.join(os.homedir(), ".openclaw", "workspace", "HEARTBEAT.md"),
   },
 });
 

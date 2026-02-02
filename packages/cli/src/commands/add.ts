@@ -14,7 +14,7 @@ import {
 import type { SnippetWithVariables, ApiResult } from "../types/index.js";
 
 export const addCommand = new Command("add")
-  .description("Add a snippet to your heartbeat.md")
+  .description("Add a snippet to your HEARTBEAT.md")
   .argument("<id>", "Snippet ID to add")
   .action(async (id: string) => {
     const { apiUrl, heartbeatPath } = getConfig();

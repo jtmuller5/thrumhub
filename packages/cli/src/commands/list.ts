@@ -10,7 +10,7 @@ import {
 } from "../lib/heartbeat.js";
 
 export const listCommand = new Command("list")
-  .description("List installed snippets in your heartbeat.md")
+  .description("List installed snippets in your HEARTBEAT.md")
   .action(async () => {
     const { heartbeatPath } = getConfig();
     const resolved = path.resolve(heartbeatPath);

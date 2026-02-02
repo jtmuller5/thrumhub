@@ -11,14 +11,15 @@ export const doctorCommand = new Command("doctor")
   .action(async () => {
     const { heartbeatPath } = getConfig();
     const resolved = path.resolve(heartbeatPath);
-    const openclawDir = path.join(os.homedir(), ".openclaw", "snippets");
+    const openclawSnippets = path.join(os.homedir(), ".openclaw", "snippets");
+    const openclawWorkspace = path.join(os.homedir(), ".openclaw", "workspace");
     let allGood = true;
 
-    // Check 1: heartbeat.md exists
+    // Check 1: HEARTBEAT.md exists
     if (fs.existsSync(resolved)) {
-      console.log(chalk.green(`[OK] heartbeat.md found at ${resolved}`));
+      console.log(chalk.green(`[OK] HEARTBEAT.md found at ${resolved}`));
     } else {
-      console.log(chalk.red(`[FAIL] heartbeat.md not found at ${resolved}`));
+      console.log(chalk.red(`[FAIL] HEARTBEAT.md not found at ${resolved}`));
       allGood = false;
     }
 
@@ -29,21 +30,29 @@ export const doctorCommand = new Command("doctor")
         console.log(chalk.green("[OK] Valid thrum-zone found"));
       } else {
         console.log(
-          chalk.red("[FAIL] No valid thrum-zone in heartbeat.md")
+          chalk.red("[FAIL] No valid thrum-zone in HEARTBEAT.md")
         );
         allGood = false;
       }
     } else {
       console.log(
-        chalk.yellow("[SKIP] Cannot check thrum-zone (heartbeat.md missing)")
+        chalk.yellow("[SKIP] Cannot check thrum-zone (HEARTBEAT.md missing)")
       );
     }
 
-    // Check 3: ~/.openclaw/snippets directory
-    if (fs.existsSync(openclawDir)) {
-      console.log(chalk.green(`[OK] ${openclawDir} exists`));
+    // Check 3: ~/.openclaw/workspace directory
+    if (fs.existsSync(openclawWorkspace)) {
+      console.log(chalk.green(`[OK] ${openclawWorkspace} exists`));
     } else {
-      console.log(chalk.red(`[FAIL] ${openclawDir} does not exist`));
+      console.log(chalk.red(`[FAIL] ${openclawWorkspace} does not exist`));
+      allGood = false;
+    }
+
+    // Check 4: ~/.openclaw/snippets directory
+    if (fs.existsSync(openclawSnippets)) {
+      console.log(chalk.green(`[OK] ${openclawSnippets} exists`));
+    } else {
+      console.log(chalk.red(`[FAIL] ${openclawSnippets} does not exist`));
       allGood = false;
     }
 
