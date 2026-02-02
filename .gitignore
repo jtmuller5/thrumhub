@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.next/
+.env
+.env.local
+.env*.local
+*.tsbuildinfo
+.turbo
+.vercel
+.DS_Store
+heartbeat.md.bak
+PRD.md
