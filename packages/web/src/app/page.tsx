@@ -40,9 +40,22 @@ export default async function HomePage({
           />
           <button
             type="submit"
-            className="bg-teal-600 hover:bg-teal-500 text-white px-6 py-2.5 rounded-lg font-medium transition-colors"
+            className="bg-teal-600 hover:bg-teal-500 text-white px-3 sm:px-6 py-2.5 rounded-lg font-medium transition-colors"
+            aria-label="Search"
           >
-            Search
+            <svg
+              className="sm:hidden w-5 h-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <span className="hidden sm:inline">Search</span>
           </button>
         </form>
 
