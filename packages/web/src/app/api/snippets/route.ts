@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { id, name, content, frequency, category, variables } = body;
+    const { id, name, description, website, content, frequency, category, variables } = body;
 
     if (!id || !name || !content || !frequency || !category) {
       const result: ApiResult<never> = { error: "Missing required fields" };
@@ -52,6 +52,8 @@ export async function POST(request: NextRequest) {
     const snippet = await createSnippet({
       id,
       name,
+      description,
+      website,
       content,
       frequency,
       category,

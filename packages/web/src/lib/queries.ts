@@ -101,6 +101,8 @@ export async function getSnippetById(
 export async function createSnippet(data: {
   id: string;
   name: string;
+  description?: string;
+  website?: string;
   content: string;
   frequency: SnippetFrequency;
   category: SnippetCategory;
@@ -110,8 +112,8 @@ export async function createSnippet(data: {
   const sql = getDb();
 
   const rows = await sql`
-    INSERT INTO snippets (id, name, content, frequency, category, author_id)
-    VALUES (${data.id}, ${data.name}, ${data.content}, ${data.frequency}, ${data.category}, ${data.author_id})
+    INSERT INTO snippets (id, name, description, website, content, frequency, category, author_id)
+    VALUES (${data.id}, ${data.name}, ${data.description || null}, ${data.website || null}, ${data.content}, ${data.frequency}, ${data.category}, ${data.author_id})
     RETURNING *
   `;
 
@@ -127,6 +129,34 @@ export async function createSnippet(data: {
   }
 
   return snippet;
+}
+
+export async function updateSnippet(
+  id: string,
+  authorId: number,
+  data: {
+    name: string;
+    description?: string;
+    website?: string;
+    content: string;
+    frequency: SnippetFrequency;
+    category: SnippetCategory;
+  }
+): Promise<Snippet | null> {
+  const sql = getDb();
+  const rows = await sql`
+    UPDATE snippets
+    SET name = ${data.name}, description = ${data.description || null}, website = ${data.website || null}, content = ${data.content}, frequency = ${data.frequency}, category = ${data.category}, updated_at = now()
+    WHERE id = ${id} AND author_id = ${authorId}
+    RETURNING *
+  `;
+  if (rows.length === 0) return null;
+  return rows[0] as unknown as Snippet;
+}
+
+export async function incrementDownloads(id: string): Promise<void> {
+  const sql = getDb();
+  await sql`UPDATE snippets SET downloads = downloads + 1 WHERE id = ${id}`;
 }
 
 export async function getUserByGithubId(

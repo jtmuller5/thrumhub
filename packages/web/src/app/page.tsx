@@ -27,8 +27,7 @@ export default async function HomePage({
           Discover <span className="text-teal-400">Thrum</span> Snippets
         </h1>
         <p className="text-slate-400 mb-8 max-w-xl mx-auto">
-          Browse community-contributed automation snippets. Install any snippet
-          with a single command.
+          Browse community-contributed HEARTBEAT snippets and keep your ClawdBot in sync
         </p>
 
         <form action="/" method="GET" className="max-w-2xl mx-auto flex gap-3">

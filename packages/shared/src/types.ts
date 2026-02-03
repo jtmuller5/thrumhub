@@ -9,12 +9,15 @@ export interface User {
 export interface Snippet {
   id: string;
   name: string;
+  description: string | null;
+  website: string | null;
   content: string;
   frequency: SnippetFrequency;
   category: SnippetCategory;
   author_id: number;
   created_at: string;
   updated_at: string;
+  downloads: number;
 }
 
 export interface SnippetVariable {
@@ -24,7 +27,7 @@ export interface SnippetVariable {
   prompt_text: string;
 }
 
-export type SnippetFrequency = "hourly" | "daily" | "weekly" | "monthly" | "on-demand";
+export type SnippetFrequency = "none" | "1h" | "2h" | "4h" | "8h" | "12h" | "24h";
 
 export type SnippetCategory =
   | "utilities"

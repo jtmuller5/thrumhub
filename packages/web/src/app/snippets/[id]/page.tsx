@@ -2,6 +2,7 @@ import { getSnippetById } from "@/lib/queries";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import CopyButton from "./copy-button";
+import EditButton from "./edit-button";
 
 export default async function SnippetPage({
   params,
@@ -18,13 +19,18 @@ export default async function SnippetPage({
   return (
     <div className="max-w-3xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-white mb-2">{snippet.name}</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-white mb-2">{snippet.name}</h1>
+        </div>
         <div className="flex items-center gap-3 text-sm text-slate-400">
           <span className="bg-slate-800 text-cyan-400 px-2 py-0.5 rounded">
             {snippet.frequency}
           </span>
           <span className="bg-slate-800 text-teal-400 px-2 py-0.5 rounded">
             {snippet.category}
+          </span>
+          <span className="bg-slate-800 text-slate-300 px-2 py-0.5 rounded">
+            {snippet.downloads} {snippet.downloads === 1 ? "install" : "installs"}
           </span>
           {snippet.author && (
             <div className="flex items-center gap-2 ml-auto">
@@ -39,7 +45,22 @@ export default async function SnippetPage({
             </div>
           )}
         </div>
+        {snippet.description && (
+          <p className="text-slate-400 mt-3">{snippet.description}</p>
+        )}
+        {snippet.website && (
+          <a
+            href={snippet.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block text-sm text-teal-400 hover:text-teal-300 mt-2 transition-colors"
+          >
+            {snippet.website}
+          </a>
+        )}
       </div>
+
+      <EditButton snippet={snippet} />
 
       <div className="bg-slate-900 border border-slate-800 rounded-lg mb-6">
         <div className="flex items-center justify-between px-4 py-2 border-b border-slate-800">

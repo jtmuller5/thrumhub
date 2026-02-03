@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Providers } from "./providers";
+import { NavAuth } from "./nav-auth";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -31,12 +32,7 @@ export default function RootLayout({
                 <a href="/dashboard" className="hover:text-teal-400 transition-colors">
                   Dashboard
                 </a>
-                <a
-                  href="/login"
-                  className="bg-teal-500/10 text-teal-400 px-3 py-1.5 rounded-md hover:bg-teal-500/20 transition-colors"
-                >
-                  Sign In
-                </a>
+                <NavAuth />
               </div>
             </div>
           </nav>

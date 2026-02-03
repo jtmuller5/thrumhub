@@ -21,7 +21,7 @@ export const addCommand = new Command("add")
     const resolved = path.resolve(heartbeatPath);
 
     // Fetch snippet from API
-    const url = `${apiUrl}/api/snippets/${encodeURIComponent(id)}`;
+    const url = `${apiUrl}/api/snippets/${encodeURIComponent(id)}?source=cli`;
 
     let snippet: SnippetWithVariables;
     try {

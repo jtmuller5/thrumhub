@@ -6,12 +6,31 @@ import { useState } from "react";
 import type { SnippetFrequency, SnippetCategory } from "@thrumhub/shared";
 
 const frequencies: SnippetFrequency[] = [
-  "hourly",
-  "daily",
-  "weekly",
-  "monthly",
-  "on-demand",
+  "none",
+  "1h",
+  "2h",
+  "4h",
+  "8h",
+  "12h",
+  "24h",
 ];
+
+const frequencyLabels: Record<SnippetFrequency, string> = {
+  none: "None",
+  "1h": "Every 1 hour",
+  "2h": "Every 2 hours",
+  "4h": "Every 4 hours",
+  "8h": "Every 8 hours",
+  "12h": "Every 12 hours",
+  "24h": "Every 24 hours",
+};
+
+function getFrequencyPrefix(frequency: SnippetFrequency, name: string): string | null {
+  if (frequency === "none") return null;
+  const hours = parseInt(frequency);
+  const label = hours === 1 ? "1+ hour" : `${hours}+ hours`;
+  return `If ${label} since last ${name || "unnamed"} check AND not currently busy with human:`;
+}
 
 const categories: SnippetCategory[] = [
   "utilities",
@@ -33,8 +52,10 @@ export default function SubmitPage() {
 
   const [name, setName] = useState("");
   const [id, setId] = useState("");
+  const [description, setDescription] = useState("");
+  const [website, setWebsite] = useState("");
   const [content, setContent] = useState("");
-  const [frequency, setFrequency] = useState<SnippetFrequency>("daily");
+  const [frequency, setFrequency] = useState<SnippetFrequency>("24h");
   const [category, setCategory] = useState<SnippetCategory>("utilities");
   const [variables, setVariables] = useState<Variable[]>([]);
   const [submitting, setSubmitting] = useState(false);
@@ -92,7 +113,11 @@ export default function SubmitPage() {
         body: JSON.stringify({
           id,
           name,
-          content,
+          description: description || undefined,
+          website: website || undefined,
+          content: frequency !== "none"
+            ? `${getFrequencyPrefix(frequency, name)}\n${content}`
+            : content,
           frequency,
           category,
           variables: variables.filter(
@@ -167,6 +192,34 @@ export default function SubmitPage() {
           </p>
         </div>
 
+        <div>
+          <label htmlFor="description" className={labelClass}>
+            Description <span className="text-slate-500 font-normal">(optional)</span>
+          </label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="A short description of what this snippet does"
+            rows={3}
+            className={inputClass}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="website" className={labelClass}>
+            Website <span className="text-slate-500 font-normal">(optional)</span>
+          </label>
+          <input
+            id="website"
+            type="url"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+            placeholder="https://example.com"
+            className={inputClass}
+          />
+        </div>
+
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label htmlFor="frequency" className={labelClass}>
@@ -180,7 +233,7 @@ export default function SubmitPage() {
             >
               {frequencies.map((f) => (
                 <option key={f} value={f}>
-                  {f}
+                  {frequencyLabels[f]}
                 </option>
               ))}
             </select>
@@ -208,6 +261,11 @@ export default function SubmitPage() {
           <label htmlFor="content" className={labelClass}>
             Content
           </label>
+          {frequency !== "none" && (
+            <div className="bg-slate-900 border border-slate-700 rounded-t-lg px-4 py-2.5 font-mono text-sm text-slate-400 border-b-0">
+              {getFrequencyPrefix(frequency, name)}
+            </div>
+          )}
           <textarea
             id="content"
             value={content}
@@ -215,7 +273,7 @@ export default function SubmitPage() {
             placeholder="Snippet content..."
             required
             rows={12}
-            className={`${inputClass} font-mono text-sm`}
+            className={`${inputClass} font-mono text-sm ${frequency !== "none" ? "rounded-t-none" : ""}`}
           />
         </div>
 
