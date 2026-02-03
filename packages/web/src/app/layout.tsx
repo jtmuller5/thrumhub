@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Providers } from "./providers";
 import { NavAuth } from "./nav-auth";
+import { MobileNav } from "./mobile-nav";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -22,11 +23,11 @@ export default function RootLayout({
               <a href="/" className="text-teal-400 font-bold text-lg tracking-tight">
                 ThrumHub
               </a>
-              <div className="flex items-center gap-3 sm:gap-6 text-sm">
+              <div className="hidden sm:flex items-center gap-6 text-sm">
                 <a href="/" className="hover:text-teal-400 transition-colors">
                   Browse
                 </a>
-                <a href="/install" className="hidden sm:block hover:text-teal-400 transition-colors">
+                <a href="/install" className="hover:text-teal-400 transition-colors">
                   Install
                 </a>
                 <a href="/submit" className="hover:text-teal-400 transition-colors">
@@ -37,6 +38,7 @@ export default function RootLayout({
                 </a>
                 <NavAuth />
               </div>
+              <MobileNav />
             </div>
           </nav>
           <main className="max-w-6xl mx-auto px-4 py-8">{children}</main>
