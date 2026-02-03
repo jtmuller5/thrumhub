@@ -1,7 +1,6 @@
 {
   "name": "@thrumhub/shared",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.5",
   "main": "./dist/types.js",
   "types": "./dist/types.d.ts",
   "exports": {

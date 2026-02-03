@@ -1,0 +1,58 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build All",
+      "type": "shell",
+      "command": "npm run build:shared && npm run build:cli && npm run build:web",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Build Shared",
+      "type": "shell",
+      "command": "npm run build:shared",
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Build CLI",
+      "type": "shell",
+      "command": "npm run build:shared && npm run build:cli",
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Build Web",
+      "type": "shell",
+      "command": "npm run build:shared && npm run build:web",
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Dev Web",
+      "type": "shell",
+      "command": "npm run dev:web",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Publish Shared",
+      "type": "shell",
+      "command": "cd packages/shared && npm version patch --no-git-tag-version && npm run build && npm publish --access public",
+      "problemMatcher": []
+    },
+    {
+      "label": "Publish CLI",
+      "type": "shell",
+      "command": "npm run build:shared && cd packages/cli && npm version patch --no-git-tag-version && npm run build && npm publish",
+      "problemMatcher": []
+    },
+    {
+      "label": "Publish All",
+      "type": "shell",
+      "command": "cd packages/shared && npm version patch --no-git-tag-version && npm run build && npm publish --access public && cd ../cli && npm version patch --no-git-tag-version && npm run build && npm publish",
+      "problemMatcher": []
+    }
+  ]
+}

@@ -24,10 +24,10 @@ function createLimiters(redis: Redis) {
       limiter: Ratelimit.slidingWindow(10, "60 s"),
       prefix: "rl:write",
     }),
-    // Download increments: 1 per snippet per IP per hour
+    // Download increments: 10 per snippet per IP per hour
     download: new Ratelimit({
       redis,
-      limiter: Ratelimit.slidingWindow(1, "3600 s"),
+      limiter: Ratelimit.slidingWindow(10, "3600 s"),
       prefix: "rl:dl",
     }),
   };
