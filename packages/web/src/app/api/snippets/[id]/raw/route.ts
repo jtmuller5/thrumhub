@@ -20,7 +20,7 @@ export async function GET(
       },
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
-    return new NextResponse(message, { status: 500 });
+    console.error("GET /api/snippets/[id]/raw failed:", error);
+    return new NextResponse("Internal server error", { status: 500 });
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "thrum",
+  "name": "thrumhub",
   "version": "0.1.0",
   "description": "CLI package manager for OpenClaw heartbeat snippets",
   "type": "module",

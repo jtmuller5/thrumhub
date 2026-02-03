@@ -27,15 +27,11 @@ export interface SnippetVariable {
   prompt_text: string;
 }
 
-export type SnippetFrequency = "none" | "1h" | "2h" | "4h" | "8h" | "12h" | "24h";
+export const SNIPPET_FREQUENCIES = ["none", "1h", "2h", "4h", "8h", "12h", "24h"] as const;
+export type SnippetFrequency = (typeof SNIPPET_FREQUENCIES)[number];
 
-export type SnippetCategory =
-  | "utilities"
-  | "social"
-  | "finance"
-  | "productivity"
-  | "monitoring"
-  | "other";
+export const SNIPPET_CATEGORIES = ["utilities", "social", "finance", "productivity", "monitoring", "other"] as const;
+export type SnippetCategory = (typeof SNIPPET_CATEGORIES)[number];
 
 export interface SnippetWithVariables extends Snippet {
   variables: SnippetVariable[];

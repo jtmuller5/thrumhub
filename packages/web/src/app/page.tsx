@@ -27,7 +27,7 @@ export default async function HomePage({
           Discover <span className="text-teal-400">Thrum</span> Snippets
         </h1>
         <p className="text-slate-400 mb-8 max-w-xl mx-auto">
-          Browse community-contributed HEARTBEAT snippets and keep your ClawdBot in sync
+          Browse community HEARTBEAT snippets and keep your ClawdBot in sync
         </p>
 
         <form action="/" method="GET" className="max-w-2xl mx-auto flex gap-3">
@@ -59,7 +59,7 @@ export default async function HomePage({
           ).map((cat) => (
             <Link
               key={cat}
-              href={`/?category=${cat}`}
+              href={category === cat ? "/" : `/?category=${cat}`}
               className={`text-xs px-3 py-1 rounded-full border transition-colors ${
                 category === cat
                   ? "border-teal-500 bg-teal-500/20 text-teal-300"

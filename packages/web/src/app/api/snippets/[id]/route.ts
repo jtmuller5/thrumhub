@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getSnippetById, incrementDownloads, updateSnippet } from "@/lib/queries";
+import { validateSnippetBody } from "@/lib/validation";
 import type { ApiResult, Snippet, SnippetWithVariables } from "@thrumhub/shared";
 
 export async function GET(
@@ -25,8 +26,8 @@ export async function GET(
     const result: ApiResult<SnippetWithVariables> = { data: snippet };
     return NextResponse.json(result);
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
-    const result: ApiResult<never> = { error: message };
+    console.error("GET /api/snippets/[id] failed:", error);
+    const result: ApiResult<never> = { error: "Internal server error" };
     return NextResponse.json(result, { status: 500 });
   }
 }
@@ -47,8 +48,9 @@ export async function PUT(
     const body = await request.json();
     const { name, description, website, content, frequency, category } = body;
 
-    if (!name || !content || !frequency || !category) {
-      const result: ApiResult<never> = { error: "Missing required fields" };
+    const validationError = validateSnippetBody(body, false);
+    if (validationError) {
+      const result: ApiResult<never> = { error: validationError };
       return NextResponse.json(result, { status: 400 });
     }
 
@@ -69,8 +71,8 @@ export async function PUT(
     const result: ApiResult<Snippet> = { data: snippet };
     return NextResponse.json(result);
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
-    const result: ApiResult<never> = { error: message };
+    console.error("PUT /api/snippets/[id] failed:", error);
+    const result: ApiResult<never> = { error: "Internal server error" };
     return NextResponse.json(result, { status: 500 });
   }
 }

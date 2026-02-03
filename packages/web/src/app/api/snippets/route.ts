@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getSnippets, searchSnippets, createSnippet } from "@/lib/queries";
+import { validateSnippetBody } from "@/lib/validation";
 import type { ApiResult, Snippet, SnippetCategory, SnippetFrequency } from "@thrumhub/shared";
 
 export async function GET(request: NextRequest) {
@@ -25,8 +26,8 @@ export async function GET(request: NextRequest) {
     const result: ApiResult<Snippet[]> = { data: snippets };
     return NextResponse.json(result);
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
-    const result: ApiResult<never> = { error: message };
+    console.error("GET /api/snippets failed:", error);
+    const result: ApiResult<never> = { error: "Internal server error" };
     return NextResponse.json(result, { status: 500 });
   }
 }
@@ -44,8 +45,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { id, name, description, website, content, frequency, category, variables } = body;
 
-    if (!id || !name || !content || !frequency || !category) {
-      const result: ApiResult<never> = { error: "Missing required fields" };
+    const validationError = validateSnippetBody(body, true);
+    if (validationError) {
+      const result: ApiResult<never> = { error: validationError };
       return NextResponse.json(result, { status: 400 });
     }
 
@@ -64,8 +66,8 @@ export async function POST(request: NextRequest) {
     const result: ApiResult<Snippet> = { data: snippet };
     return NextResponse.json(result, { status: 201 });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
-    const result: ApiResult<never> = { error: message };
+    console.error("POST /api/snippets failed:", error);
+    const result: ApiResult<never> = { error: "Internal server error" };
     return NextResponse.json(result, { status: 500 });
   }
 }
