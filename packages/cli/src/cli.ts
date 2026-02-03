@@ -5,6 +5,7 @@ import { addCommand } from "./commands/add.js";
 import { removeCommand } from "./commands/remove.js";
 import { listCommand } from "./commands/list.js";
 import { doctorCommand } from "./commands/doctor.js";
+import { configCommand } from "./commands/config.js";
 
 const program = new Command();
 
@@ -19,5 +20,6 @@ program.addCommand(addCommand);
 program.addCommand(removeCommand);
 program.addCommand(listCommand);
 program.addCommand(doctorCommand);
+program.addCommand(configCommand);
 
 program.parse();
