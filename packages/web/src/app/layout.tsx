@@ -26,6 +26,9 @@ export default function RootLayout({
                 <a href="/" className="hover:text-teal-400 transition-colors">
                   Browse
                 </a>
+                <a href="/install" className="hover:text-teal-400 transition-colors">
+                  Install
+                </a>
                 <a href="/submit" className="hover:text-teal-400 transition-colors">
                   Submit
                 </a>
